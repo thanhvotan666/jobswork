@@ -18,6 +18,36 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'vnp_url' => env('VNP_URL'),
+    'vnp_tmncode' => env('VNP_TMNCODE'),
+    'vnp_hashsecret' => env('VNP_HASHSECRET'),
+    'logo' => env('LOGO'),
+    'zalo' => env('ZALO'),
+    'facebook' => env('FACEBOOK'),
+    'twitter' => env('TWITTER'),
+    'linkedin' => env('LINKEDIN'),
+    'youtube' => env('YOUTUBE'),
+    'instagram' => env('INSTAGRAM'),
+    'google' => env('GOOGLE'),
+    'pinterest' => env('PINTEREST'),
+    'skype' => env('SKYPE'),
+    'whatsapp' => env('WHATSAPP'),
+    'telegram' => env('TELEGRAM'),
+    'company_name' => env('COMPANY_NAME'),
+    'address_s' => env('ADDRESS_S'),
+    'phone_s' => env('PHONE_S'),
+    'address_n' => env('ADDRESS_N'),
+    'phone_n' => env('PHONE_N'),
+    'email' => env('EMAIL'),
+    'hotline' => env('HOTLINE'),
+    'tiktok' => env('TIKTOK'),
+    'threads' => env('THREADS'),
+    'dmca' => env('DMCA'),
+    'online_gov' => env('ONLINE_GOV'),
+    'twilio_sid' => env('TWILIO_SID'),
+    'twilio_auth_token' => env('TWILIO_AUTH_TOKEN'),
+    'twilio_phone_number' => env('TWILIO_PHONE_NUMBER'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -70,8 +100,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
-
+    'timezone' => env('TIMEZONE', 'UTC'),
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -83,7 +112,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'vi',
 
     /*
     |--------------------------------------------------------------------------
@@ -96,7 +125,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'vi',
 
     /*
     |--------------------------------------------------------------------------

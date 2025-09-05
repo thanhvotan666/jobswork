@@ -1,12 +1,11 @@
 <?php
 
-use App\Http\Controllers\IntroducedController;
-use App\Http\Controllers\JobController;
-use App\Http\Controllers\User\AppliedController;
-use App\Http\Controllers\User\SavedController;
-use App\Http\Controllers\User\UserController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\User\IntroducedJobController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\JobController;
+use App\Http\Controllers\Api\User\AppliedController;
+use App\Http\Controllers\Api\User\IntroducedJobController;
+use App\Http\Controllers\Api\User\SavedController;
+use App\Http\Controllers\Api\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

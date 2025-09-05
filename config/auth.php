@@ -39,6 +39,20 @@ return [
         'driver' => 'jwt',
         'provider' => 'users',
     ],
+                'admin' => [
+                'driver' => 'session',
+                'provider' => 'admins',
+            ],
+
+            'user' => [
+                'driver' => 'session',
+                'provider' => 'users',
+            ],
+
+            'employer' => [
+                'driver' => 'session',
+                'provider' => 'employers',
+            ],
 ],
 
     /*
@@ -64,10 +78,15 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
+
+        'employers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Employer::class,
+        ],
     ],
 
     /*
@@ -89,14 +108,14 @@ return [
     |
     */
 
-    'passwords' => [
-        'users' => [
-            'provider' => 'users',
-            'table' => 'password_reset_tokens',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
-    ],
+    // 'passwords' => [
+    //     'users' => [
+    //         'provider' => 'users',
+    //         'table' => 'password_reset_tokens',
+    //         'expire' => 60,
+    //         'throttle' => 60,
+    //     ],
+    // ],
 
     /*
     |--------------------------------------------------------------------------
