@@ -211,7 +211,7 @@
                             <div class="carousel-inner">
                                 @foreach ($jobGroups as $index => $group)
                                     <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                        <div class="row row-cols-2 row-cols-xl-3 g-2 g-lg-3">
+                                        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2 g-lg-3">
                                             @foreach ($group as $job)
                                                 <div class="col">
                                                     <a href="{{ route('job', $job->id) }}"
@@ -315,7 +315,7 @@
                         <div class="carousel-inner">
                             @foreach ($employerGroups as $index => $group)
                                 <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                    <div class="row row-cols-3 row-cols-xl-6 g-2 g-lg-3">
+                                    <div class="row row-cols-2 row-cols-md-3 row-cols-xl-6 g-2 g-lg-3">
                                         @foreach ($group as $employer)
                                             <div class="col">
                                                 <a href="{{ route('employer', $employer->id) }}"
@@ -384,7 +384,7 @@
                             ->limit(6)
                             ->get();
                         @endphp
-                        <div class="row row-cols-2 row-cols-xl-3 g-2">
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
                             @foreach ($jobs as $job)
                                 <div class="col">
                                     <a href="{{ route('job', $job->id) }}"
@@ -461,7 +461,7 @@
                             ->get();
                     @endphp
                     <div>
-                        <div class="row row-cols-3 row-cols-xl-4 g-2 g-lg-3">
+                        <div class="row row-cols-2 row-cols-md-3 row-cols-xl-4 g-2 g-lg-3">
                             @foreach ($professions as $profession)
                                 <div class="col">
                                     <a href="{{ route('jobs', ['profession' => $profession->id]) }}"

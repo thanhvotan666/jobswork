@@ -179,10 +179,18 @@
             </ul>
         </div>
     </div>
+        <br>
+    <div class="row container-fluid">
+        <div class="col-12 d-flex justify-content-center align-items-center gap-3 py-3">
+                <img src="{{ asset('storage/image/qrcode/qr.png')}}" height="100" alt="download qr">
+            <a href="{{ asset('storage/file/jobwork.apk')}}">
+                <img src="{{ asset('storage/image/apk.png')}}" height="60" alt="download apk">
+            </a>
+        </div>
+    </div>
     <br>
     <div class="row container-fluid">
         <div class="col-sm-10">
-            
             <pre class="pull-left fw-bold text-center">{{$footer->bottom}}</pre>
         </div>
         <div class="col-sm-2">

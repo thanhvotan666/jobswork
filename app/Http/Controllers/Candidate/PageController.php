@@ -14,6 +14,10 @@ class PageController extends Controller
 {
     public function index()
     {       
+        // $jobs = Job::all();
+        // foreach($jobs as $job){
+        //     $job->update(['expired' => now()->addDays(rand(60,120))]);
+        // }
         return view('candidate.index');
     }
     public function login()
