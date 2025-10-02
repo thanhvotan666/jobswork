@@ -7,7 +7,7 @@
                 <h1>{{ __('edit') }} - {{ __('id') }}: {{ $service->id }}</h1>
                 <div class="d-flex flex-column gap-4 bg-white rounded-3 p-4">
                     <div class="d-flex gap-4 ">
-                        <div>Name: </div>
+                        <div>{{__('name')}}: </div>
                         <div class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
                             data-bs-toggle="modal" data-bs-target="#nameModal" style="text-decoration: underline">
                             {{ $service->name }}</div>
@@ -107,6 +107,45 @@
                                                 <option value="0">No</option>
                                             </select>
                                             <label>{{ __('hot job') }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">{{ __('exit') }}</button>
+                                        <button type="submit" class="btn btn-primary">
+                                            {{ __('save changes') }}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-4">
+                        <div>{{ __('description') }}: </div>
+                        <div class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                            data-bs-toggle="modal" data-bs-target="#descriptionModal"
+                            style="text-decoration: underline; cursor:pointer;">
+                            <pre style='white-space:pre-wrap;'>{{ $service->description ?? '...' }}</pre>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="descriptionModal" tabindex="-1"
+                            aria-labelledby="descriptionModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <form class="modal-content" method="POST"
+                                    action="{{ route('admin.services.update', ['service' => $service->id]) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5">{{ __('edit') }} {{ __('description') }}</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-floating">
+                                            <textarea class="form-control" id="description" name="description" style="height: 150px;">{{ old('description', $service->description) }}</textarea>
+                                            <label for="description">{{ __('description') }}</label>
                                         </div>
                                     </div>
                                     <div class="modal-footer">

@@ -77,7 +77,7 @@
     "min salary": "Lương tối thiểu",
     "max salary": "Lương tối đa",
     "type salary": "Loại lương",
-    "million VND": "triệu VND",
+    "million VND": "VND",
     "USD": "USD",
     "skills": "Kỹ năng",
     "skill": "Kỹ năng",
@@ -1054,5 +1054,7 @@
     "not refreshed yet":"Chưa được làm mới",
     "passwork must be at least 8 characters":"Mật khẩu phải có ít nhất 8 ký tự",
     "name must be at least 5 characters":"Tên phải có ít nhất 5 ký tự",
+    "intern":"Thực tập",
+    "by project": "Theo dự án",
     "": ""
 }   

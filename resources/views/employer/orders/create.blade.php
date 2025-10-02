@@ -42,9 +42,13 @@
                                     <tbody>
                                         @foreach ($products as $product)
                                             <tr class="small">
-                                                <th scope="row" class="text-center">
-                                                    <i class="bi bi-boxes" style="font-size: 20px;"></i>
-                                                </th>
+<th scope="row" class="text-center">
+    <i class="bi bi-boxes" style="font-size: 20px;"
+       data-bs-toggle="tooltip"
+       data-bs-placement="top"
+       data-bs-html="true"
+       title="<pre style='white-space:pre-wrap;'>{{ $product->service->description ?? '...' }}</pre>"></i>
+</th>
                                                 <td style="max-width:300px;">
                                                     {{ $product->name}}
                                                 </td>
@@ -117,6 +121,13 @@
     </section>
 </main>
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    });
+
     function onClickRadioSelect(e) {
         e.checked = true;
         document.getElementById('cart_id').value = e.value;

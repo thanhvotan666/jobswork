@@ -43,6 +43,16 @@
                     @enderror
                 </div>
 
+                <!-- Description -->
+                <div class="mb-3">
+                    <label for="description" class="form-label">{{ __('description') }}</label>
+                    <textarea class="form-control @error('description') is-invalid @enderror"
+                        id="description" name="description" rows="4">{{ old('description') }}</textarea>
+                    @error('description')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 <button type="submit" class="btn btn-primary">{{ __('create') }}</button>
             </form>
         </div>

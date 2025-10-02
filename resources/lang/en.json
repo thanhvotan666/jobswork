@@ -77,7 +77,7 @@
     "min salary": "Min salary",
     "max salary": "Max salary",
     "type salary": "Type salary",
-    "million VND": "million VND",
+    "million VND": "VND",
     "USD": "USD",
     "skills": "Skills",
     "skill": "Skill",
@@ -1059,6 +1059,8 @@
     "not refreshed yet":"Not refreshed yet",
     "passwork must be at least 8 characters":"Password must be at least 8 characters",
     "name must be at least 5 characters": "Name must be at least 5 characters",
+    "intern":"Intern",
+    "by project":"By project",
     "": ""
     
 }

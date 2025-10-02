@@ -13,7 +13,7 @@ class Service extends Model
         'name',
         'show_contact_candidate',
         "hot_job",
-        'price',
+        'description',
     ];
     public function admin()
     {

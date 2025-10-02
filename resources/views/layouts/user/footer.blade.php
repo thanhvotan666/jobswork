@@ -49,7 +49,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-12 col-xxl-9 d-flex flex-wrap gap-5 justify-content-between ">
+            <div class="col-12 col-lg-9 d-flex flex-wrap gap-5 justify-content-between ">
                 <div>
                     <div>
                         <strong>

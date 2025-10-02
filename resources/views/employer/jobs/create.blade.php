@@ -136,7 +136,7 @@
                                         <label for="demand" class="form-label text-success">{{ __('demand') }} <red>*</red></label>
                                         <select name="demand" id='demand' class="form-control">
                                             @php
-                                                $demand = ['fulltime', 'parttime', 'urgent', 'online', 'remote'];
+                                                $demand = ['fulltime', 'parttime', 'intern', 'by project'];
                                             @endphp
                                             @foreach ($demand as $d)
                                                 <option value="{{ $d }}" @selected( $job?->demand == $d)>{{ __($d) }}</option>
@@ -178,14 +178,16 @@
                                     </div>
                                     <div class="col">
                                         <label for="min_salary" class="form-label text-success">{{ __('min salary') }}</label>
-                                        <input type="number" min="0" class="form-control" id="min_salary" name="min_salary"
-                                            value="{{ $job?->min_salary }}" @disabled(old('agreement',$job?->min_salary == null && $job?->max_salary == null))
+                                        <input type="text" class="form-control" id="min_salary" name="min_salary"
+                                            value="{{ $job?->min_salary }}" 
+                                            @disabled(old('agreement',$job?->min_salary == null && $job?->max_salary == null))
                                         >
                                     </div>
                                     <div class="col">
                                         <label for="max_salary" class="form-label text-success">{{ __('max salary') }}</label>
-                                        <input type="number" min="0" class="form-control" id="max_salary" name="max_salary"
-                                            value="{{ $job?->max_salary }}" @disabled(old('agreement',$job?->min_salary == null && $job?->max_salary == null))
+                                        <input type="text" class="form-control" id="max_salary" name="max_salary"
+                                            value="{{ $job?->max_salary }}" 
+                                            @disabled(old('agreement',$job?->min_salary == null && $job?->max_salary == null))
                                         >
                                     </div>
                                 </div>
@@ -200,8 +202,8 @@
 
                                 </div> 
                                 <div class="mb-3">
-                                    <label for="job_profession" class="form-label  text-success">
-                                        {{ __('professional skills') }} <red>*</red>
+                                    <label for="job_profession" class="form-label text-success">
+                                        {{ __('specialized') }} <red>*</red>
                                     </label>
                                     
                                     
@@ -266,6 +268,8 @@
     </main>
 
     <script>
+        
+
         document.addEventListener('DOMContentLoaded', function () {
             var sendEmail = document.querySelector('#sendEmail');
             new Tagify(sendEmail, {
@@ -291,6 +295,7 @@
             placeholder: true,
             placeholderValue: '',
             searchEnabled: true,     // có thể gõ tìm
+            maxItemCount: 3 
             });
 
             var position = document.querySelector('#position');
@@ -313,6 +318,26 @@
             placeholder: true,
             placeholderValue: '',
             searchEnabled: true,     // có thể gõ tìm
+            });
+        });
+        function formatNumber(input) {
+            let value = input.value.replace(/\./g, '').replace(/,/g, '.'); // chuẩn hóa
+            if (!isNaN(value) && value !== "") {
+                let parts = value.split('.');
+                parts[0] = parseInt(parts[0], 10).toLocaleString('de-DE'); // format 1.000.000
+                input.value = parts.join(',');
+            }
+        }
+        document.querySelectorAll('#min_salary, #max_salary').forEach(el => {
+            el.addEventListener('input', () => formatNumber(el));
+        });
+
+        document.querySelector('form').addEventListener('submit', function () {
+            document.querySelectorAll('#min_salary, #max_salary').forEach(el => {
+                if (el.value) {
+                    // "1.000.000,3" → "1000000.3"
+                    el.value = el.value.replace(/\./g, '').replace(/,/g, '.');
+                }
             });
         });
     </script>

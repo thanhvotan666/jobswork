@@ -53,6 +53,7 @@ class ServiceController extends Controller
             'name' => 'required|string|max:255|unique:services,name',
             'show_contact_candidate' => 'required|boolean',
             'hot_job' => 'required|boolean',
+            'description' => 'nullable|string',
         ]);
 
         Service::create([
@@ -60,6 +61,7 @@ class ServiceController extends Controller
             'show_contact_candidate' => $request->show_contact_candidate,
             'hot_job' => $request->hot_job,
             'admin_id' => auth()->guard('admin')->id(),
+            'description' => $request->description,
         ]);
         return redirect()->route('admin.services.index')->with('success', __('service created successfully'));
     }
@@ -128,6 +130,15 @@ class ServiceController extends Controller
             ]);
 
             $service->hot_job = $request->hot_job;
+            $service->save();
+
+            return back()->with('success', __('edit service is success'));
+        }
+        if ($request->has('description')) {
+            $request->validate([
+                'description' => 'nullable|string',
+            ]);
+            $service->description = $request->description;
             $service->save();
 
             return back()->with('success', __('edit service is success'));
