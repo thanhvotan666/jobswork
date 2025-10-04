@@ -59,7 +59,6 @@
                     <div class="d-flex flex-column gap-2">
                         @foreach (\App\Models\LocationSelect::limit(8)->get() as $location)
                             <a href="{{ route('jobs', ['location' => $location->location]) }}">
-                                {{ __('job') }}
                                 {{ $location->location }}
                             </a>
                         @endforeach
@@ -74,7 +73,7 @@
                     <div class="d-flex flex-column gap-2">
                         @foreach (\App\Models\Profession::limit(8)->get() as $profession)
                             <a href="{{ route('jobs', ['profession_name' => $profession->name]) }}">
-                                {{ __('job') }} {{ $profession->name }}
+                                {{ $profession->name }}
                             </a>
                         @endforeach
                     </div>
@@ -82,12 +81,15 @@
                 <div>
                     <div>
                         <strong>
-                            {{ __('job by company') }}
+                            {{ __('jobs by title') }}
                         </strong>
                     </div>
                     <div class="d-flex flex-column gap-2">
-                        <a href="">---</a>
-                        <a href="">---</a>
+                         @foreach (['internship', 'employee', 'team-leader', 'department head','deputy director', 'director', 'other'] as $position)
+                            <a href="{{ route('jobs', ['position' => $position]) }}">
+                                {{ __($position) }}
+                            </a>
+                        @endforeach
                     </div>
                 </div>
                 <div>
@@ -95,10 +97,9 @@
                             {{ __('job by demand') }}
                         </strong></div>
                     <div class="d-flex flex-column gap-2">
-                        @foreach (['fulltime', 'parttime', 'urgent', 'online', 'remote'] as $demand)
+                        @foreach (['fulltime', 'parttime', 'by project','other'] as $demand)
                             <a href="{{ route('jobs', ['demand' => $demand]) }}">
-                                {{ __('job') }}
-                                {{ $demand }}
+                                {{ __($demand) }}
                             </a>
                         @endforeach
                     </div>

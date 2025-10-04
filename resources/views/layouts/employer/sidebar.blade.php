@@ -72,7 +72,7 @@
         <li class="nav-item">
             <a href="{{ route('employer.candidates.index') }}" class="nav-link">
                 <i class="bi bi-people-fill"></i>
-                <span>{{ __('candidate list') }}
+                <span>{{ __('applied candidates') }}
                     ({{ auth()->guard('employer')->user()->jobs()->withCount('applieds')->get()->sum('applieds_count') }})
                 </span>
             </a>

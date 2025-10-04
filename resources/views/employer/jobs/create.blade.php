@@ -16,7 +16,7 @@
     <main>
         <section>
             <div class="container-fluid">
-                <form action="{{ route('employer.jobs.store') }}" method="POST" class="mt-4">
+                <form action="{{ route('employer.jobs.store') }}" method="POST" class="mt-4" id="form_create_job">
                     @csrf
                     <ul class="nav nav-tabs w-100 d-flex" id="myTab" role="tablist">
                         <li class="nav-item col-4 text-center" role="presentation">
@@ -151,8 +151,8 @@
                                     </div>
                                     <div class="col">
                                         <label for="quantity" class="form-label text-success">{{ __('quantity recruitment') }} <red>*</red></label>
-                                        <input type="number" class="form-control" name="quantity" id="quantity" required
-                                            value="{{ $job?->quantity }}"
+                                        <input type="number" class="form-control" name="quantity" id="quantity" min='1' required
+                                            value="{{ $job?->quantity ?? 1 }}"
                                         >
                                     </div>
                                 </div>
@@ -219,15 +219,22 @@
                                     </select>
                                 </div>
                                 <hr>
-                                <div class="d-flex justify-content-between m-4">
-                                    <button type="button" class="btn btn-secondary btn-back" onclick="document.getElementById('home-tab').click()">
-                                        {{__('back')}}
-                                    </button>
-                                    
-                                    <button type="button" class="btn btn-primary btn-next" onclick="document.getElementById('contact-tab').click()">
-                                        {{__('next')}}
-                                    </button>
-                                </div>
+<div class="d-flex justify-content-between m-4">
+    <button 
+        type="button" 
+        class="btn btn-secondary btn-back" 
+        data-skip-validate="true" 
+        onclick="document.getElementById('home-tab').click()">
+        {{__('back')}}
+    </button>
+    
+    <button 
+        type="button" 
+        class="btn btn-primary btn-next" 
+        onclick="document.getElementById('contact-tab').click()">
+        {{__('next')}}
+    </button>
+</div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
@@ -253,7 +260,7 @@
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between  m-4">
-                                <button type="button" class="btn btn-secondary btn-back" onclick="document.getElementById('profile-tab').click()">
+                                <button type="button" class="btn btn-secondary btn-back" data-skip-validate="true" onclick="document.getElementById('profile-tab').click()">
                                     {{__('back')}}
                                 </button> 
                                 <button type="submit" class="btn btn-success">
@@ -262,7 +269,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </section>
     </main>
@@ -303,7 +310,7 @@
             new Tagify(position, {
             // enforceWhitelist: true,
             delimiters: ",",
-            whitelist: ["{{__('internship')}}", "{{__('employee')}}", "{{__('manager')}}"],
+            whitelist: ["{{__('internship')}}", "{{__('employee')}}", "{{__('team-leader')}}", "{{__('department head')}}", "{{__('deputy director')}}", "{{__('director')}}", "{{__('other')}}"],
             maxTags: 1,           // chỉ cho 1 giá trị
             dropdown: {
                 enabled: 0,         // luôn bật dropdown gợi ý
@@ -319,27 +326,158 @@
             placeholderValue: '',
             searchEnabled: true,     // có thể gõ tìm
             });
-        });
-        function formatNumber(input) {
-            let value = input.value.replace(/\./g, '').replace(/,/g, '.'); // chuẩn hóa
-            if (!isNaN(value) && value !== "") {
-                let parts = value.split('.');
-                parts[0] = parseInt(parts[0], 10).toLocaleString('de-DE'); // format 1.000.000
-                input.value = parts.join(',');
-            }
-        }
-        document.querySelectorAll('#min_salary, #max_salary').forEach(el => {
-            el.addEventListener('input', () => formatNumber(el));
-        });
+            document.querySelector('#form_create_job').addEventListener('submit', function () {
+                document.querySelectorAll('#min_salary, #max_salary').forEach(el => {
+                    if (el.value) {
+                        // "1.000.000,3" → "1000000.3"
+                        el.value = el.value.replace(/\./g, '').replace(/,/g, '.');
+                    }
+                });
+            });
 
-        document.querySelector('form').addEventListener('submit', function () {
-            document.querySelectorAll('#min_salary, #max_salary').forEach(el => {
-                if (el.value) {
-                    // "1.000.000,3" → "1000000.3"
-                    el.value = el.value.replace(/\./g, '').replace(/,/g, '.');
+            function formatNumber(input) {
+                // Loại bỏ tất cả ký tự không phải số hoặc dấu chấm/phẩy
+                let raw = input.value.replace(/[^\d.,]/g, '');
+
+                // Chuẩn hóa: bỏ dấu "." (ngăn cách ngàn cũ), đổi "," thành "."
+                let value = raw.replace(/\./g, '').replace(/,/g, '.');
+
+                if (!isNaN(value) && value !== "") {
+                    let parts = value.split('.');
+                    // Format phần nguyên: 1.000.000
+                    parts[0] = parseInt(parts[0], 10).toLocaleString('de-DE');
+                    input.value = parts.join(',');
+                } else {
+                    input.value = raw; // nếu không phải số thì giữ phần số đã lọc
                 }
+            }
+
+            document.querySelectorAll('#min_salary, #max_salary').forEach(el => {
+                el.addEventListener('input', () => formatNumber(el));
             });
         });
+
+        
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Mảng required cho từng tab
+    const requiredByTab = {
+        "home-tab-pane": ["name", "description", "requirement", "benefits"], 
+        "profile-tab-pane": [
+            "address", "location", "position", "degree", "experience", 
+            "demand", "expired", "quantity", "type_salary", 
+            "job_skill", "job_profession"
+        ],
+        "contact-tab-pane": ["required"]
+    };
+
+    // Các field cần tối thiểu 30 từ
+    const minWord30Fields = ["description", "requirement", "benefits"];
+
+    // Hàm đếm số từ
+    function countWords(str) {
+        return (str.trim().match(/\S+/g) || []).length;
+    }
+
+    // Hàm hiển thị lỗi
+    function showError(el, message) {
+        el.classList.add("is-invalid");
+
+        // Nếu chưa có feedback thì tạo
+        let feedback = el.parentNode.querySelector(".invalid-feedback");
+        if (!feedback) {
+            feedback = document.createElement("div");
+            feedback.className = "invalid-feedback";
+            el.parentNode.appendChild(feedback);
+        }
+        feedback.textContent = message;
+    }
+
+    // Hàm clear lỗi
+    function clearError(el) {
+        el.classList.remove("is-invalid");
+        let feedback = el.parentNode.querySelector(".invalid-feedback");
+        if (feedback) {
+            feedback.textContent = "";
+        }
+    }
+
+    // Bắt sự kiện khi chuyển tab
+    const tabTriggerEls = document.querySelectorAll('#myTab button[data-bs-toggle="tab"]');
+    tabTriggerEls.forEach(function (tabEl) {
+        tabEl.addEventListener("show.bs.tab", function (event) {
+            // Nếu là nút Back thì bỏ qua validate
+            if (document.activeElement && document.activeElement.dataset.skipValidate === "true") {
+                return;
+            }
+
+            const currentTabPane = document.querySelector(".tab-pane.active");
+            if (!currentTabPane) return;
+
+            let tabId = currentTabPane.getAttribute("id");
+            let isValid = true;
+            let firstInvalid = null;
+
+            // Lấy danh sách required của tab hiện tại
+            let requiredFields = requiredByTab[tabId] || [];
+
+            requiredFields.forEach(function (id) {
+                let el = currentTabPane.querySelector("#" + id);
+                if (el) {
+                    let valueOk = true;
+                    let errorMsg = "";
+
+                    // Kiểm tra SELECT multiple
+                    if (el.tagName === "SELECT" && el.multiple) {
+                        valueOk = el.selectedOptions.length > 0;
+                        if (!valueOk) errorMsg = "Trường này không được để trống";
+                    } else {
+                        valueOk = el.value && el.value.trim() !== "";
+                        if (!valueOk) errorMsg = "Trường này không được để trống";
+                    }
+
+                    // Kiểm tra min 30 từ cho các field đặc biệt
+                    if (valueOk && minWord30Fields.includes(id)) {
+                        if (countWords(el.value) < 30) {
+                            valueOk = false;
+                            errorMsg = "Trường này phải có ít nhất 30 từ";
+                        }
+                    }
+
+                    if (!valueOk) {
+                        isValid = false;
+                        showError(el, errorMsg);
+                        if (!firstInvalid) firstInvalid = el;
+                    } else {
+                        clearError(el);
+                    }
+                }
+            });
+
+            if (!isValid) {
+                event.preventDefault(); 
+                event.stopPropagation();
+                if (firstInvalid) firstInvalid.focus(); // focus vào field lỗi đầu tiên
+            }
+        });
+    });
+
+    // Khi user nhập/chọn thì bỏ class lỗi
+    document.querySelectorAll("input, textarea, select").forEach(function (el) {
+        el.addEventListener("input", function () {
+            if (el.value.trim()) {
+                clearError(el);
+            }
+        });
+        el.addEventListener("change", function () {
+            if (el.value.trim()) {
+                clearError(el);
+            }
+        });
+    });
+});
     </script>
 
 @endsection 

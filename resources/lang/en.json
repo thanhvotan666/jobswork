@@ -1061,6 +1061,11 @@
     "name must be at least 5 characters": "Name must be at least 5 characters",
     "intern":"Intern",
     "by project":"By project",
+    "team-leader": "Team-leader",
+    "department head": "Department head",
+    "deputy director": "Deputy director",
+    "director": "Director",
+    "jobs by title": "Jobs by title",
     "": ""
     
 }

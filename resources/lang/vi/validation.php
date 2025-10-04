@@ -48,6 +48,7 @@ return [
     'url' => 'Trường :attribute không phải là URL hợp lệ.',
 
     'attributes' => [
+        'quantity' => 'số lượng',
         'name' => 'tên',
         'email' => 'địa chỉ email',
         'password' => 'mật khẩu',
